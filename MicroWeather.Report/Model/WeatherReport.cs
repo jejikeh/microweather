@@ -1,7 +1,8 @@
 ﻿namespace MicroWeather.Report.Model;
 public class WeatherReport
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
+    public DateTime CreatedOn { get; set; }
     public decimal AverageTemperatureHighC { get; set; }
     public decimal AverageTemperatureLowC { get; set; }
     public decimal RainfallTotalInches { get; set;}

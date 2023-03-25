@@ -14,6 +14,6 @@ public class WeatherReportDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
+        modelBuilder.ApplyConfiguration(new WeatherReportConfiguration());
     }
 }
