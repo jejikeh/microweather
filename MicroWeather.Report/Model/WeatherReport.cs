@@ -1,0 +1,10 @@
+﻿namespace MicroWeather.Report.Model;
+public class WeatherReport
+{
+    public int Id { get; set; }
+    public decimal AverageTemperatureHighC { get; set; }
+    public decimal AverageTemperatureLowC { get; set; }
+    public decimal RainfallTotalInches { get; set;}
+    public decimal SnowTotalInches { get; set; }
+    public string ZipCode { get; set; } = "undefined";
+}
