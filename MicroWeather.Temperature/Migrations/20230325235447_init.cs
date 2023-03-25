@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -16,9 +15,8 @@ namespace MicroWeather.Temperature.Migrations
                 name: "Temperatures",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    CreatedOn = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     TempHighC = table.Column<decimal>(type: "numeric", nullable: false),
                     TempLowC = table.Column<decimal>(type: "numeric", nullable: false),
                     ZipCode = table.Column<string>(type: "text", nullable: false)

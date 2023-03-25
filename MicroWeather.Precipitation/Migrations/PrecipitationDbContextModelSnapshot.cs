@@ -32,7 +32,7 @@ namespace MicroWeather.Precipitation.Migrations
                         .HasColumnType("numeric");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("WeatherType")
                         .IsRequired()

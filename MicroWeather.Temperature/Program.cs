@@ -11,6 +11,7 @@ builder.Services.AddDbContext<TemperatureDbContext>(
         optionsBuilder.EnableSensitiveDataLogging();
         optionsBuilder.EnableDetailedErrors();
         optionsBuilder.UseNpgsql(builder.Configuration.GetConnectionString("Temperature"));
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
     }, ServiceLifetime.Transient
 );
@@ -32,7 +33,7 @@ app.MapGet("/observation/{zip}", async (string zip, [FromQuery] int? days, Tempe
 app.MapPost("/observation", async (TemperatureViewModel temperatureViewModel, TemperatureDbContext context) => {
     var temperature = new Temperature(){
         Id = Guid.NewGuid(),
-        CreatedOn = temperatureViewModel.CreateOn,
+        CreatedOn = temperatureViewModel.CreatedOn,
         TempHighC = temperatureViewModel.TempHighC,
         TempLowC = temperatureViewModel.TempLowC,
         ZipCode = temperatureViewModel.ZipCode

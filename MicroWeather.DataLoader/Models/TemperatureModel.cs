@@ -2,8 +2,8 @@
 
 public class TemperatureModel
 {
-    public decimal TemperatureHighC { get; set; }
+    public decimal TempHighC { get; set; }
     public DateTime CreatedOn { get; set; }
-    public decimal TemperatureLowC { get;set; }
+    public decimal TempLowC { get;set; }
     public string ZipCode { get; set; }
 }

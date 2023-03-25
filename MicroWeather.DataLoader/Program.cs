@@ -11,10 +11,25 @@ var configuration = new ConfigurationBuilder()
     .Build();
 
 var servicesConfig = configuration.GetSection("Services");
+var tempJson = servicesConfig.GetSection("Temperature");
+var port = tempJson["Port"];
+var host = tempJson["Host"];
 
-var tempServiceConfig = JsonSerializer.Deserialize<ServiceConfig>(servicesConfig.GetSection("Temperature").Value);
+var tempServiceConfig = new ServiceConfig()
+{
+    Port = port,
+    Host = host
+};
 
-var precipitationServiceConfig = JsonSerializer.Deserialize<ServiceConfig>(servicesConfig.GetSection("Precipitation").Value);
+tempJson = servicesConfig.GetSection("Precipitation");
+port = tempJson["Port"];
+host = tempJson["Host"];
+
+var precipitationServiceConfig = new ServiceConfig
+{
+    Port = port,
+    Host = host
+};
 
 var zipCodes = new List<string>
 {
@@ -63,7 +78,7 @@ void PostPrecipitation(int lowTemp, string zip, DateTime day)
 
         precipitationModel = new PrecipitationModel()
         {
-            AmmountInches = precipInches,
+            AmountInches = precipInches,
             WeatherType = weatherType,
             ZipCode = zip,
             CreatedOn = day
@@ -73,7 +88,7 @@ void PostPrecipitation(int lowTemp, string zip, DateTime day)
     {
         precipitationModel = new PrecipitationModel()
         {
-            AmmountInches = 0,
+            AmountInches = rand.Next(1,10),
             WeatherType = weatherType,
             ZipCode = zip,
             CreatedOn = day
@@ -85,10 +100,10 @@ void PostPrecipitation(int lowTemp, string zip, DateTime day)
 
     if (precipitationResponse.IsSuccessStatusCode)
         Console.WriteLine(
-            $"Posted Precipitation: Date {day:d}" +
-            $"Zip: {zip}" +
-            $"Type: {weatherType}" +
-            $"Amount: {precipitationModel.AmmountInches}");
+            $"Posted Precipitation: Date {day:d}\n" +
+            $"\tZip: {zip} " +
+            $"Type: {weatherType} " +
+            $"Amount: {precipitationModel.AmountInches} ");
 }
 
 List<int> PostTemperature(string zip, DateTime day)
@@ -107,15 +122,15 @@ List<int> PostTemperature(string zip, DateTime day)
         CreatedOn = day
     };
 
-    var temperatureResponse = precipitationHttpClient?.PostAsJsonAsync("observation", temperatureModel).Result;
+    var temperatureResponse = temperatureHttpClient?.PostAsJsonAsync("observation", temperatureModel).Result;
 
 
     if (temperatureResponse.IsSuccessStatusCode)
         Console.WriteLine(
-            $"Posted Precipitation: Date {day:d}" +
-            $"Zip: {zip}" +
-            $"Lo: {temperatureModel.TemperatureLowC}" +
-            $"Hi: {temperatureModel.TemperatureHighC}");
+            $"Posted Temperature: Date {day:d}\n" +
+            $"\tZip: {zip} " +
+            $"Lo: {temperatureModel.TemperatureLowC} " +
+            $"Hi: {temperatureModel.TemperatureHighC} ");
 
     return hTemps;
 }

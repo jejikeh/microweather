@@ -11,6 +11,7 @@ builder.Services.AddDbContext<PrecipitationDbContext>(
         optionsBuilder.EnableSensitiveDataLogging();
         optionsBuilder.EnableDetailedErrors();
         optionsBuilder.UseNpgsql(builder.Configuration.GetConnectionString("Precipitation"));
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }, 
     ServiceLifetime.Transient
 );
@@ -32,7 +33,7 @@ app.MapGet("/observation/{zip}", async (string zip, [FromQuery] int? days, Preci
 app.MapPost("/observation", async (PrecipitationViewModel precipitationModel, PrecipitationDbContext context) => {
     var precipitation = new Precipitation(){
         Id = Guid.NewGuid(),
-        CreatedOn = precipitationModel.CreateOn,
+        CreatedOn = precipitationModel.CreatedOn,
         AmountInches = precipitationModel.AmountInches,
         WeatherType = precipitationModel.WeatherType,
         ZipCode = precipitationModel.ZipCode
