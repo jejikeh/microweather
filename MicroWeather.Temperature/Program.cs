@@ -32,7 +32,7 @@ app.MapGet("/observation/{zip}", async (string zip, [FromQuery] int? days, Tempe
 app.MapPost("/observation", async (TemperatureViewModel temperatureViewModel, TemperatureDbContext context) => {
     var temperature = new Temperature(){
         Id = Guid.NewGuid(),
-        CreatedOn = DateTime.UtcNow,
+        CreatedOn = temperatureViewModel.CreateOn,
         TempHighC = temperatureViewModel.TempHighC,
         TempLowC = temperatureViewModel.TempLowC,
         ZipCode = temperatureViewModel.ZipCode

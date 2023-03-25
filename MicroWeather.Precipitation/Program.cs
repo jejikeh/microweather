@@ -32,7 +32,7 @@ app.MapGet("/observation/{zip}", async (string zip, [FromQuery] int? days, Preci
 app.MapPost("/observation", async (PrecipitationViewModel precipitationModel, PrecipitationDbContext context) => {
     var precipitation = new Precipitation(){
         Id = Guid.NewGuid(),
-        CreatedOn = DateTime.UtcNow,
+        CreatedOn = precipitationModel.CreateOn,
         AmountInches = precipitationModel.AmountInches,
         WeatherType = precipitationModel.WeatherType,
         ZipCode = precipitationModel.ZipCode
