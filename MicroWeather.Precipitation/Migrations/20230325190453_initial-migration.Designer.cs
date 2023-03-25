@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MicroWeather.Precipitation.Migrations
 {
     [DbContext(typeof(PrecipitationDbContext))]
-    [Migration("20230323222750_initial-migration")]
+    [Migration("20230325190453_initial-migration")]
     partial class initialmigration
     {
         /// <inheritdoc />
